@@ -1,0 +1,25 @@
+# API
+fastapi>=0.110
+uvicorn[standard]>=0.29
+
+# Embeddings locaux (gratuits)
+sentence-transformers>=3.0
+
+# Recherche vectorielle
+faiss-cpu>=1.8
+
+# Cache clé-valeur + statistiques
+redis>=5.0
+
+# Configuration (.env)
+pydantic-settings>=2.2
+
+# Fournisseurs LLM (un seul est nécessaire à l'exécution)
+groq>=0.11
+google-genai>=1.0
+
+# Benchmark
+requests>=2.31
+
+# Tests
+pytest>=8.0
