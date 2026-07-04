@@ -192,7 +192,20 @@ All settings live in `config.py` and can be overridden via `.env`:
 
 Real data points from this project — a close paraphrase ("C'est quoi la capitale de la France ?") scores **0.90** against the original, while a longer, more indirect one ("Peux-tu me dire quelle ville est la capitale française ?") drops to **0.79**. This is the classic precision/recall trade-off: at 0.85 the second phrasing triggers a (safe) LLM call instead of a cache hit.
 
-To pick the threshold with data instead of intuition, run `python evaluate_threshold.py`: it sweeps thresholds from 0.70 to 0.95 on the **Quora Question Pairs** dataset (404k labeled question pairs) and reports precision/recall/F1 for each — for a cache, favor high precision (a false positive serves a wrong answer; a false negative merely costs one LLM call).
+### Threshold evaluation on real data
+
+`python evaluate_threshold.py` sweeps the threshold over 4,000 sampled pairs from the **Quora Question Pairs** dataset (404k human-labeled question pairs). Measured results:
+
+| Threshold | Precision | Recall | F1 |
+|----------:|----------:|-------:|------:|
+| 0.70 | 0.726 | 0.942 | 0.820 |
+| 0.75 | 0.757 | 0.878 | 0.813 |
+| 0.80 | 0.792 | 0.761 | 0.776 |
+| **0.85 (default)** | **0.838** | **0.612** | 0.707 |
+| 0.90 | 0.879 | 0.430 | 0.578 |
+| 0.95 | 0.925 | 0.214 | 0.348 |
+
+How to read this for a *cache*: a **false positive serves a wrong answer to the user**, while a false negative merely costs one extra LLM call — so precision matters far more than recall or F1 (which peaks at 0.70). At the default `0.85`, the cache still captures 61% of true duplicates while keeping wrong answers in check. Two caveats worth knowing: Quora's "non-duplicates" are *hard negatives* (closely related questions), so real-world precision — where most distinct questions are entirely unrelated — runs substantially higher than these figures; and raising the threshold (or swapping in a stronger embedding model) is the lever if your domain punishes wrong answers severely.
 
 ## 🧠 Design Decisions
 
