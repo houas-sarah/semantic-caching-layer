@@ -2,6 +2,7 @@
 
 A production-style caching layer that sits in front of any LLM API and serves **semantically similar questions straight from cache** — cutting response latency from seconds to milliseconds and eliminating redundant, billable LLM calls.
 
+![CI](https://github.com/houas-sarah/semantic-caching-layer/actions/workflows/ci.yml/badge.svg)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-async-009688)
 ![FAISS](https://img.shields.io/badge/FAISS-vector%20search-4B8BBE)
@@ -87,7 +88,7 @@ docker run -d --name redis -p 6379:6379 redis:7
 ### 2. Install
 
 ```bash
-git clone https://github.com/<your-username>/semantic-caching-layer.git
+git clone https://github.com/houas-sarah/semantic-caching-layer.git
 cd semantic-caching-layer
 
 python -m venv venv
